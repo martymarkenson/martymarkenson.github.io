@@ -1,10 +1,3 @@
-# 360-image-gallery-boilerplate
+A VR tour of the Soldiers and Sailors Monument in Boston Commons creating using [A-Frame](https://aframe.io/)
+- [Link to page](http://martymarkenson.github.io)
 
-> Featured in the *Building an Advanced Scene* guide.
-
-Scene for selecting between different 360-degree images.
-
-## Dependencies
-
-- [A-Frame](https://github.com/aframevr/aframe)
-- [K-Frame](https://github.com/ngokevin/k-frame)
