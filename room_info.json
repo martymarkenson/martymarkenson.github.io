@@ -1,0 +1,4 @@
+{"Links":[
+    {"room":"living_room", "position":"0 0 -5", "rotation":"0 0 0"}
+    {"room":"hallway", "position":"0 0 5", "rotation"="0 180 0"}
+    ]}

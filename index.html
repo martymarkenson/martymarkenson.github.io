@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>360&deg; Boston Commons</title>
+    <meta name="description" content="360&deg; Image Gallery - A-Frame">
+    <script src="https://aframe.io/releases/0.3.0/aframe.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-template-component@3.0.1"></script>
+    <script src="components/place-link.js"></script>
+    <script src="components/update-raycaster.js"></script>
+  </head>
+  <body onclick="cursorClick()">
+    <a-scene>
+      <a-assets>
+        <img id="twelve_0-photo" crossorigin="anonymous" src="images/twelve_0.jpg">
+        <img id="twelve_30-photo" crossorigin="anonymous" src="images/twelve_30.jpg">
+        <img id="three_15-photo" crossorigin="anonymous" src="images/three_15.jpg">
+        <img id="three_45-photo" crossorigin="anonymous" src="images/three_45.jpg">
+        <img id="six_30-photo" crossorigin="anonymous" src="images/six_30.jpg">
+        <img id="six_0-photo" crossorigin="anonymous" src="images/six_0.jpg">
+        <img id="nine_45-photo" crossorigin="anonymous" src="images/nine_45.jpg">
+        <img id="nine_15-photo" crossorigin="anonymous" src="images/nine_15.jpg">
+        <a-asset-item id="arrow-obj" src="images/obj/arrow.obj"></a-asset-item>
+        <a-asset-item id="arrow-mtl" src="images/obj/arrow.mtl"></a-asset-item>
+
+        <!-- Image link template to be reused. -->
+        <script id="link" type="text/nunjucks">
+          <a-obj-model class="link"
+            mtl="#arrow-mtl"
+            src="#arrow-obj"
+            event-set__1="_event: mousedown; scale: 1 1 1"
+            event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+            event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+            event-set__4="_event: mouseleave; scale: 1 1 1"
+            set-image="on: click; target: #image-360; src: {{ src }}; camera: #camera; rotation: {{rotation}};"
+            id = {{ id }}
+            update-raycaster="#cursor">
+            </a-obj-model>
+        </script>
+      
+      </a-assets>
+      <a-sky rotation="0 90 0" id="image-360" radius="100" src="#twelve_0-photo"></a-sky>
+      <!-- Image links. -->
+        <a-entity id="links">
+            <a-entity template="src: #link" data-id="#twelve_30" data-src="#twelve_30-photo" data-rotation="-2" rotation="10 0 0" position="0 0 -5" scale =".01 .01 .04"></a-entity>
+            <a-entity template="src: #link" data-id="#three_15" data-src="#three_15-photo" data-rotation="-25" rotation="10 62.2 0" position="-4.33 0 -2.5" scale=".01 .01 .04"></a-entity>
+            <a-entity template="src: #link" data-id="#nine_45" data-src="#nine_45-photo" data-rotation="-136" rotation = "10 -50 0" position ="3.83 0 -3.214" scale=".01 .01 .04"></a-entity>
+        </a-entity>
+
+      <!-- Camera + cursor. -->
+      <a-entity id="camera" camera look-controls>
+          <a-cursor id="cursor"
+          animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+          animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+          event-set__1="_event: mouseenter; color: springgreen"
+          event-set__2="_event: mouseleave; color: black"
+          raycaster="objects: .link">
+          </a-cursor>
+      </a-entity>
+    </a-scene>
+    <script src="components/set-image.js"></script>
+  </body>
+</html>
