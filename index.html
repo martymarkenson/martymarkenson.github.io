@@ -1,15 +1,58 @@
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="landing_style.css">
-    </head>
-    <body>
-        <h1 style="text-align:center">Virtual Reality Tour</h1>
-        <ul class="rig columns-3">
-	       <li onclick="window.open('soldiers.html');">
-               <img src="images/soldiers_thumb.jpg" />
-               <h3>Soldiers and Sailors Monument</h3>
-               <p>The Soldiers and Sailors Monument on Boston Common at Boston, in the U.S. Commonwealth of Massachusetts, was erected in memory of Massachusetts soldiers and sailors who died in the American Civil War. Designed by Martin Milmore, construction began in 1874 and the monument was dedicated on September 17, 1877. Union Generals George B. McClellan and Joseph Hooker were among the estimated 25,000 people attending the dedication on Boston Common.</p>
-            </li>
-        </ul>
-    </body>
+  <head>
+    <title>My first Three.js app</title>
+    <style>
+      body { margin: 0; }
+      canvas { width: 100%; height: 100% }
+    </style>
+  </head>
+  <body>
+    <script src="components/three.js"></script>
+    <script src="components/MTLLoader.js"></script>
+    <script src="components/OBJLoader.js"></script>
+    <script>
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 2000 );
+
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+
+      var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+      directionalLight.position.set( 0, 0, 1 ).normalize();
+      scene.add( directionalLight );
+      var Marty;
+      var mtlLoader = new THREE.MTLLoader();
+      mtlLoader.setPath('images/obj/Marty/');
+      mtlLoader.load('Marty.mtl', function(materials) {
+        materials.preload();
+        var objLoader = new THREE.OBJLoader();
+        objLoader.setMaterials(materials);
+        objLoader.setPath('images/obj/Marty/');
+        objLoader.load('Marty.obj', function(object) {
+        object.position.y= 0;
+        object.rotation.x = Math.PI;
+        Marty = object;
+        scene.add(object);
+        });
+      });
+
+      camera.position.z = 1;
+      camera.position.y = -.5;
+
+      var render = function () {
+        requestAnimationFrame( render );
+        Marty.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      };
+
+      function addObject(object) {
+        object.position.y= 0;
+        object.rotation.x = Math.PI;
+        scene.add(object);
+        };
+
+      render();
+    </script>
+  </body>
 </html>
