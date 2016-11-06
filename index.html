@@ -18,40 +18,44 @@
       renderer.setSize( window.innerWidth, window.innerHeight );
       document.body.appendChild( renderer.domElement );
 
-      var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-      directionalLight.position.set( 0, 0, 1 ).normalize();
-      scene.add( directionalLight );
+      //var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+      //directionalLight.position.set( 0, 0, 1 ).normalize();
+      //scene.add( directionalLight );
+      
       var Marty;
       var mtlLoader = new THREE.MTLLoader();
-      mtlLoader.setPath('images/obj/Marty/');
+      /*mtlLoader.setPath('images/obj/Marty/');
       mtlLoader.load('Marty.mtl', function(materials) {
         materials.preload();
         var objLoader = new THREE.OBJLoader();
         objLoader.setMaterials(materials);
         objLoader.setPath('images/obj/Marty/');
         objLoader.load('Marty.obj', function(object) {
-        object.position.y= 0;
+        object.position.y= .3;
         object.rotation.x = Math.PI;
+        object.rotation.y = -.3;
         Marty = object;
         scene.add(object);
         });
-      });
+      });*/
 
-      camera.position.z = 1;
-      camera.position.y = -.5;
+      var sphere = new THREE.Mesh(
+        new THREE.SphereGeometry(2, 32, 32),
+        new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture('images/six_0.jpg')
+          })
+        );
+      scene.add( sphere );
+
+
+      camera.position.z = 5;
 
       var render = function () {
         requestAnimationFrame( render );
-        Marty.rotation.y += 0.01;
+        sphere.rotation.y += 0.005;
+        sphere.rotation.x += 0.005;
         renderer.render(scene, camera);
       };
-
-      function addObject(object) {
-        object.position.y= 0;
-        object.rotation.x = Math.PI;
-        scene.add(object);
-        };
-
       render();
     </script>
   </body>
